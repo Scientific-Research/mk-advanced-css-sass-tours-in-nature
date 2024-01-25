@@ -1,0 +1,228 @@
+.navigation {
+  &__checkbox {
+    display: none;
+  }
+
+  &__button {
+    background-color: $color-white;
+    height: 7rem;
+    width: 7rem;
+    position: fixed;
+    top: 6rem;
+    right: 6rem;
+    border-radius: 50%;
+    z-index: 2000;
+    box-shadow: 0 1rem 3rem rgba($color-black, 0.1);
+    text-align: center;
+    cursor: pointer;
+
+    // here we want to bring a little bit the white circle button higher to stay in one row
+    // with Natours sign when i am showing the webpage in tablet-port screen:
+    @include respond(tablet-port) {
+      top: 4rem;
+      right: 4rem;
+    }
+
+    @include respond(phone) {
+      top: 3rem;
+      right: 3rem;
+    }
+  }
+
+  &__background {
+    // to have a ball here at the right top of the page, the height and width have to be the same
+    // size: 6rem
+    height: 6rem;
+    width: 6rem;
+    border-radius: 50%;
+    position: fixed;
+    top: 6.5rem;
+    right: 6.5rem;
+    // background-image: radial-gradient(#2c4b24, #1e0e19);
+    // background-image: radial-gradient(circle, #ff0000, #0000ff);
+    // background-image: radial-gradient($color-primary-light, $color-primary-dark);
+    // background-image: radial-gradient(circle, #118711, #0000ff);
+    background-image: radial-gradient(circle, #00ff00, #0000ff);
+    // background-image: radial-gradient(circle, #118711, #19302b);
+    // background-image: radial-gradient(circle, #ff8c00, #ffff00);
+    // background-image: radial-gradient(circle, #8b4513, #006400);
+    // background-image: radial-gradient(circle, #0000ff, #800080);
+
+    z-index: 1000;
+
+    // to make the middle layer(the layer which will appears when i click on this circle) appears,
+    // and it takes all the page with a green color:
+    // transform: scale(80);
+
+    // the animation for circle button
+    // transition: transform 0.8s;
+    // transition: all 0.8s;
+    // transition: all 0.8s cubic-bezier();
+    // .block {
+    // transition: all 0.8s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    // }
+    // transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
+    // https://easings.net/#easeInOutQuint
+    transition: transform 2s cubic-bezier(0.83, 0, 0.17, 1);
+
+    // here we want to bring a little bit the white circle button higher to stay in one row
+    // with Natours sign when i am showing the webpage in tablet-port screen:
+    @include respond(tablet-port) {
+      top: 4.5rem;
+      right: 4.5rem;
+    }
+
+    @include respond(phone) {
+      top: 3.5rem;
+      right: 3.5rem;
+    }
+  }
+
+  &__nav {
+    height: 100vh;
+    // width: 100%;
+    position: fixed;
+    top: 0;
+    // left: 0;
+    right: 0;
+    // background-color: orangered;
+    z-index: 1500;
+
+    // to get ride of the items temporarirly and the link underneth
+    opacity: 0;
+    width: 0;
+
+    // the animation for opacity
+    // transition: apacity 0.8s;
+    // transition: all 0.8s;
+    // https://easings.net/#easeInOutBack
+    transition: all 2s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  }
+
+  &__list {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    list-style: none;
+    text-align: center;
+    width: 100%;
+  }
+
+  &__item {
+    margin: 1rem;
+  }
+
+  &__link {
+    &:link,
+    &:visited {
+      display: inline-block;
+      font-size: 3rem;
+      font-weight: 300;
+      padding: 1rem 2rem;
+      color: $color-white;
+      text-decoration: none;
+      text-transform: uppercase;
+      // we did the similar trick for the section for booking now!
+      background-image: linear-gradient(120deg, transparent 0%, transparent 50%, $color-white 50%);
+      // when we change the value from 100% to 200%, the red section will increase till
+      // end of the page!
+      background-size: 230%;
+      transition: all 0.4s;
+
+      span {
+        margin-right: 1.5rem;
+        display: inline-block;
+      }
+    }
+    &:hover,
+    &:active {
+      // we just have to use background position to make the reverse the direction of the filling the
+      // box eith orange red color! of couser, with background-size: 220% and not 200%;
+      background-position: 100%;
+      color: $color-primary;
+      // using below command,the link moves to the right a little, when i click on that but when
+      // display: inline-block; come with.
+      transform: translateX(1rem);
+    }
+  }
+
+  // when i click on the circle on top right of the page, we can make a green screen appear and disappear
+  // ON/OFF
+  &__checkbox:checked ~ &__background {
+    transform: scale(80);
+  }
+
+  // and the links and navigation items will be on the green screen too, when it switches!
+  &__checkbox:checked ~ &__nav {
+    // transform: scale(80);
+    opacity: 1;
+    width: 100%;
+  }
+
+  // to create ICON for this round button top right of the page:
+  &__icon {
+    position: relative;
+    margin-top: 3.5rem;
+
+    &,
+    &::before,
+    &::after {
+      width: 3rem;
+      height: 2px;
+      background-color: $color-grey-dark-3;
+      display: inline-block;
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      transition: all 2s;
+    }
+
+    &::before {
+      top: -0.8rem;
+      // transform-origin: right; => it rotates only around the right point of the line.
+      // transform-origin: left; => it rotates only around the left point of the line.
+      // in both cases, we have to comment out this command: top:0 in ::before below;
+      // when we don't assign origin, it will rotate around the middle point of the line.
+      // we don't use now the transform-origin, that's why it rotates around the middle of the
+      // line!
+    }
+    &::after {
+      top: 0.8rem;
+    }
+  }
+
+  // icon is child element of button, so we can select it like this:
+  &__button:hover &__icon::before {
+    top: -1rem;
+  }
+
+  &__button:hover &__icon::after {
+    top: 1rem;
+  }
+
+  // checkbox and button are siblings and icon is child of button, that's why we can select
+  // them using a plus sign (+) in between. when checkbox is checked, then we select his brother
+  // button and at the end we select its child => icon.
+  &__checkbox:checked + &__button &__icon {
+    background-color: transparent;
+  }
+
+  &__checkbox:checked + &__button &__icon::before {
+    top: 0;
+    // with 45deg, the icon after clicking will convert to the X sign.
+    // transform: rotate(135deg);
+    transform: rotate(360deg);
+  }
+
+  &__checkbox:checked + &__button &__icon::after {
+    top: 0;
+    // with 45deg, the icon after clicking will convert to the X sign.
+    // transform: rotate(-135deg);
+    transform: rotate(-360deg);
+  }
+}

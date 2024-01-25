@@ -1,0 +1,78 @@
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+//  a new mixin for absolute Center
+@mixin absCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// MEDIA QUERY MANAGER
+/*
+0 - 600px:      Phone
+600 - 900px:    Tablet portrait
+900 - 1200px:   Tablet landscape
+[1200 - 1800] is where our normal styles apply => desktop
+1800px + :      Big desktop
+*/
+
+// this is only for test!
+// @mixin respond-phone {
+//   @media (max-width: 600px) {
+//     @content;
+//   }
+// }
+
+/*
+$breakpoint argument choices:
+- phone
+- tablet-port
+- tablet-land
+- big-desktop
+
+between em and rem, em works better as rem in some browsers! => that's why we use em 
+instead of rem here! Actually our font-size: 62.5%; in _base.scss doesn't help us
+because in mixin, it takes the font-size from browser and in browser, every em is 16px,
+so, we have to write all things about pixels in mixin in em like what i did below!
+
+ORDER: Base + typography > general layout + grid > page layout > components
+
+1em = 16px
+*/
+
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone {
+    // 600px / 16 = 37.5em
+    // only screen means when somebody want to print the page out,
+    // media query does't have any effect on the printed page anymore!
+    @media only screen and (max-width: 37.5em) {
+      @content;
+    }
+  }
+  @if $breakpoint == tablet-port {
+    // 900px / 16 = 56.25em
+    @media only screen and (max-width: 56.25em) {
+      @content;
+    }
+  }
+  @if $breakpoint == tablet-land {
+    // 1200px / 16 = 75em
+    @media only screen and (max-width: 75em) {
+      @content;
+    }
+  }
+  @if $breakpoint == big-desktop {
+    // 1800px / 16 = 112.5em
+    @media only screen and (min-width: 112.5em) {
+      // when width is larger than 1800px => it means min width would be 1800px
+      @content;
+    }
+  }
+}

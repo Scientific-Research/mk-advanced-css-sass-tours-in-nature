@@ -1,0 +1,78 @@
+/* ::after and ::before are Sudo-elements :hover is sudo-class*/
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  /* box-sizing: border-box; */
+  /* it inherits the border-size from box-sizing in body */
+  box-sizing: inherit;
+}
+
+html {
+  /* font-size: 10px; => 10px is one rem => 10px = 1rem*/
+  /* 10px (we want) / 16px (default pixel in browsers) = 0.625 * 100 = 62.5% */
+  font-size: 62.5%;
+  /* 0.625 * 16px(our root font size changed by user in the browser) = 10px(our used font size in our project!) */
+  /* 0.625 * 20px(our root font size changed by user in the browser) = 12.5px(our used font size in our project!) */
+
+  // @media (max-width: 600px) {
+  //   font-size: 50%;
+  // } => this has the same result like what comes below with @include and mixin
+
+  // @include respond-phone {
+  //   font-size: 50%;
+  // }
+
+  // @include respond(phone) {
+  //   font-size: 50%;
+  // }
+
+  // when we have the screen with 500px => we want that width < 600 applies => that's why
+  // we have to order it in this current order => 500px will apply to the width < 600px,
+  // because 500px is smaller than both of them => applies to both of them, but we want
+  // only the width < 600px, that's why we bring width < 600px between two of them.
+
+  @include respond(tablet-land) {
+    // greater than 900px bis 1200px and equal to that
+    // width < 1200?
+    font-size: 56.25%; // we define here: 1rem = 9px => 9/16px = 0.5625px => 56.25%
+  }
+
+  @include respond(tablet-port) {
+    // less than and equal to 900px
+    // width < 900?
+    font-size: 50%; // for example,i want here 1rem = 8px => 8px/16px = 0.5 * 100 = 50%
+    // for example, padding for 4rem is 4 * 10px = 40px for normal showing and for here as
+    // tablet-land the padding would be 4 * 8px = 32px and not 40px anymore!
+  }
+
+  // this is here just for learning and it doesn't make sense because the font-size= 4.8px
+  // is very small, that's why i comment it out!
+  // @include respond(phone) {
+  //   // less than and equal to 600px
+  //   font-size: 30%; // we define here: 1rem = 4.8px => 4.8/16px = 0.3 * 100 = 30%
+  // }
+
+  // more than 1200px bis 1800px but not equal to 1800px => 62.5%
+  @include respond(big-desktop) {
+    // greater than and equal to 1800px bis infinite => 75%
+    font-size: 75%; // we define here: 1rem = 12px => 12/16px = 0.75px => 75%
+  }
+}
+
+body {
+  box-sizing: border-box;
+  padding: 3rem;
+
+  @include respond(tablet-port) {
+    padding: 0;
+  }
+}
+
+// what i select on the page, it shows me with green color and not with blue color
+// as default color - personal style: green color applies to my selected text!
+::selection {
+  background-color: $color-primary;
+  color: $color-white;
+}

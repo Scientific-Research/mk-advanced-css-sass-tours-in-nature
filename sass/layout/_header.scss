@@ -1,0 +1,70 @@
+.header {
+  height: 85vh;
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  background-image: linear-gradient(to right bottom, rgba($color-primary-light, 0), rgba($color-primary-dark, 0)),
+    url(/img/hero-small.jpg); // in normal screen (not high resolution), we want to display
+  // small hero photo!=> resolution less than 1200px
+  background-size: cover;
+  background-position: top;
+  position: relative;
+
+  // when the browser supports clip-path, it will overwrite obove height: 85vh to height: 95hv;
+  // when it doesn't support, it doesn't go inside @supports and height would be 85vh and also
+  // we will not have clip-path too => @supports is like if in programming languages
+  @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+    height: 95vh;
+  }
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  // media Query depends on the resolution:
+  // 600px/16 in em: 37.5em - 2000px/16 in em: 125em
+  // @media (min-resolution: 192dpi) and (min-width: 600px), (min-width: 2000px) {
+  // OR
+  @media only screen and (min-resolution: 192dpi) and (min-width: 37.5em),
+    only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 37.5em),
+    only screen and (min-width: 125em) {
+    // comma means OR
+    // this above line(-webkit...) added only due to Compatibility with Safari Browser
+    // when the resolution is more than 192dpi(more than 1200px) and width is more than 600px,
+    // this code will run: on this situation, we show the image with high resolution:
+    background-image: linear-gradient(to right bottom, rgba($color-primary-light, 0), rgba($color-primary-dark, 0)),
+      url(/img/hero.jpg);
+  }
+  // we can write this in a short form like what comes oben:
+  // @media (min-width: 2000px) {
+  //   // when the resolution is more than 192dpi(more than 1200px) and width is more than 600px,
+  //   // this code will run: on this situation, we show the image with high resolution:
+  //   background-image: linear-gradient(to right bottom, rgba($color-primary-light, 0.8), rgba($color-primary-dark, 0.8)),
+  //     url(/img/hero.jpg);
+  // }
+
+  @include respond(phone) {
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+  }
+
+  &__logo-box {
+    position: absolute;
+    /* top: 40px; */
+    top: 4rem;
+    /* left: 40px; */
+    left: 4rem;
+  }
+  &__logo {
+    /* height: 35px; */
+    height: 3.5rem;
+  }
+
+  /* .logo:hover {
+      animation: moveInLeft 3s ease;
+    } */
+
+  &__text-box {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+}

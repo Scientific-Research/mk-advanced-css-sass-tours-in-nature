@@ -1,0 +1,85 @@
+.row {
+  //   max-width: 114rem;
+  max-width: $grid-width;
+  //   background-color: #eee;
+  margin: 0 auto;
+  //   margin-bottom: 80px;
+  //   margin-bottom: $gutter-vertical;
+
+  // to remove the margin from last element:(Col 1 of 4 Col 3 of 4):both answers are the same:
+  //   &:last-child {
+  //     margin-bottom: 0;
+  //   }
+  // or using something NEW: not operator:
+  // this means that margin-bottom for all the rows but not for the last ones(last child):
+  &:not(:last-child) {
+    margin-bottom: $gutter-vertical;
+
+    @include respond(tablet-port) {
+      // width: 100% !important;
+      margin-bottom: $gutter-vertical-small;
+    }
+  }
+
+  @include respond(tablet-port) {
+    // width: 100% !important;
+    // margin-bottom: $gutter-vertical-small;
+    max-width: 50rem;
+    padding: 0 3rem;
+  }
+
+  @include clearfix;
+
+  // [class^="col-"]: means the classes which begins with col- will be selected!
+  // [class*="col-"]: means the classes which contains col- will be selected!
+  // [class$="col-"]: means the classes which ends with col- will be selected!
+  // this helps us to don't repeat the same commands for all the classes which begins
+  // with col-. We write it only for one time and use it for all the classes starts with col-.
+  [class^="col-"] {
+    // background-color: orangered;
+    float: left;
+
+    &:not(:last-child) {
+      margin-right: $gutter-horizontal;
+
+      @include respond(tablet-port) {
+        // width: 100% !important;
+        margin-right: 0;
+        margin-bottom: $gutter-vertical-small;
+      }
+    }
+
+    @include respond(tablet-port) {
+      width: 100% !important;
+    }
+  }
+
+  .col-1-of-2 {
+    width: calc((100% - #{$gutter-horizontal}) / 2);
+  }
+
+  .col-1-of-3 {
+    width: calc((100% - #{$gutter-horizontal * 2}) / 3);
+  }
+
+  .col-2-of-3 {
+    width: calc(100% - (#{$gutter-horizontal} + #{calc((100% - #{$gutter-horizontal * 2}) / 3)}));
+  }
+
+  .col-1-of-4 {
+    width: calc((100% - #{$gutter-horizontal}* 3) / 4);
+  }
+
+  .col-2-of-4 {
+    width: calc(100% - ((2 * ((100% - #{$gutter-horizontal}* 3) / 4)) + (2 *#{$gutter-horizontal})));
+  }
+
+  .col-3-of-4 {
+    width: calc(100% - ((((100% - #{$gutter-horizontal}* 3) / 4)) + (#{$gutter-horizontal})));
+  }
+}
+
+// to remove the margin from last element:(Col 1 of 4 Col 3 of 4):both answers are the same:
+// .grid-test .row:nth-child(6) {
+//   margin-bottom: 0;
+// }
