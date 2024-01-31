@@ -1214,6 +1214,7 @@ body {
     color: #f7f7f7;
     background-color: #333;
     text-decoration: none;
+    text-transform: uppercase;
     display: inline-block;
     transition: all 0.2s; }
   .footer__link:hover, .footer__link:active {
